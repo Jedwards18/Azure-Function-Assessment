@@ -14,7 +14,7 @@ export class DataPersister {
         try {
             await this._database.write(data);
         } catch (error: any) {
-            throw error; // do something better here
+            throw error;
         }
     }
 

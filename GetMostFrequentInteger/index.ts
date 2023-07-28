@@ -5,7 +5,6 @@ import { DataPersister, PostgresDatabase } from "../db";
 
 const db = new DataPersister(new PostgresDatabase());
 
-
 const httpTrigger: AzureFunction = async function (context: Context, req: HttpRequest): Promise<HttpResponseSimple> {
     db.connect()
 
@@ -20,12 +19,12 @@ const httpTrigger: AzureFunction = async function (context: Context, req: HttpRe
 
     const integerAndNumberOfOccurrence: Record<number, number> = {};
 
-    integers.sort().forEach((integer: number) => {
+    integers.forEach((integer: number) => {
         if (!integerAndNumberOfOccurrence[integer]) integerAndNumberOfOccurrence[integer] = 1;
         else integerAndNumberOfOccurrence[integer]++;
     })
 
-    const highestFrequencyOfOccurrence = Object.values(integerAndNumberOfOccurrence)[0]
+    const highestFrequencyOfOccurrence = Object.values(integerAndNumberOfOccurrence).sort((a,b) => {return b-a})[0]
 
     const response = extractMostFrequentInteger(integerAndNumberOfOccurrence, highestFrequencyOfOccurrence)
 
